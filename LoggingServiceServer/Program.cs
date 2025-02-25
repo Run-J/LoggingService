@@ -1,11 +1,19 @@
-﻿using LoggingServer.Services;
+﻿//
+//
+//
+//
+
+using LoggingServer.Services;
 using LoggingServer.Configuration;
 
 
 
-Console.WriteLine("Hello World!");
+
 
 Console.WriteLine($"Current Working Directory: {Directory.GetCurrentDirectory()}");
 
-var config = ServerConfig.LoadConfig();
-Console.WriteLine(config.ServerPort);
+ServerConfig config = ServerConfig.LoadConfig();
+Server server = new Server(config);
+await server.StartAsync();
+
+
