@@ -1,4 +1,6 @@
-﻿global using System;
+﻿// Global Using File
+
+global using System;
 global using System.IO;
 global using System.Net;
 global using System.Net.Sockets;

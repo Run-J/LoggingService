@@ -2,8 +2,9 @@
 
 public class LogEntry
 {
-    public string Timestamp { get; set; } = "";
-    public string Ip { get; set; } = "";
+    public string ClientTimestamp { get; set; } = "";
+    public string ServerTimestamp { get; set; } = "";
+    public string ClientIp { get; set; } = "";
     public string Level { get; set; } = "";
     public string Message { get; set; } = "";
 

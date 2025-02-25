@@ -45,17 +45,6 @@ public class Server
 
         try
         {
-            //// Buffer to store the response bytes.
-            //Byte[] data = new Byte[256];
-
-            //// String to store the response ASCII representation.
-            //System.String responseData = System.String.Empty;
-
-            //// Read the first batch of the TcpServer response bytes.
-            //Int32 bytes = stream.Read(data, 0, data.Length);
-            //responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            //Console.WriteLine("Received: {0}", responseData);
-
             string? message = await reader.ReadLineAsync();
             if (message == null)
             {
@@ -66,8 +55,11 @@ public class Server
             var logEntry = JsonSerializer.Deserialize<LogEntry>(message);
             if (logEntry is not null)
             {
-                logEntry.Ip = clientIp;
-                logEntry.Timestamp = DateTime.UtcNow.ToString("o");
+                TimeZoneInfo torontoTimeZone = TimeZoneInfo.FindSystemTimeZoneById("America/Toronto");
+                DateTime torontoTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, torontoTimeZone);
+
+                logEntry.ServerTimestamp = torontoTime.ToString("o");
+                logEntry.ClientIp = clientIp;
 
                 await _logger.WriteLogAsync(logEntry);
                 Console.WriteLine($"[Server] Logged from {clientIp}: {logEntry.Message}");
